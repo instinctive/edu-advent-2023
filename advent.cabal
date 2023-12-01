@@ -1,0 +1,29 @@
+cabal-version: 3.0
+version: 1.0.0.0
+name: advent
+-- vim: foldmethod=marker
+
+common shared -- {{{
+  default-language: GHC2021
+  ghc-options: -O2
+  mixins: base hiding (Prelude), base-prelude (BasePrelude as Prelude)
+  default-extensions:
+    BlockArguments
+    CPP
+    DataKinds
+    DerivingVia
+    ImplicitParams
+    LambdaCase
+    MonadComprehensions
+    MultiWayIf
+    PatternSynonyms
+    RecordWildCards
+    TransformListComp
+    TypeFamilies
+    ViewPatterns
+  build-depends: base, base-prelude
+  -- }}}
+
+executable day01
+  import:  shared
+  main-is: day01.hs
