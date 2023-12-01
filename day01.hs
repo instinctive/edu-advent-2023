@@ -1,3 +1,5 @@
+-- https://adventofcode.com/2023/day/1
+
 module Main where
 
 main = getContents >>= \s -> do
