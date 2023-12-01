@@ -13,6 +13,7 @@ part1 (c:_) | isDigit c = Just $ digitToInt c
 part1 _ = Nothing
 
 part2 s = part1 s <|> asum (match <$> numbers) where
-    match (n,w) = isPrefixOf w s & bool Nothing (Just n)
+    match (n,w) | isPrefixOf w s = Just n
+    match _ = Nothing
 
 numbers = zip [1..] $ words "one two three four five six seven eight nine"
