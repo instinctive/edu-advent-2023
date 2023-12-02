@@ -38,8 +38,7 @@ gameParser =
 
 part1 = sum . map fst . filter (all (`leq` bag) . snd)
 
-part2 = sum . map power where
-    power = product . M.elems . M.unionsWith max . snd
+part2 = sum . map (product . M.unionsWith max . snd)
 
 leq a b = all f (M.assocs a) where
     f (k,v) = v <= M.findWithDefault 0 k b
