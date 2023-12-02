@@ -25,6 +25,7 @@ common shared -- {{{
   -- }}}
   build-depends: base, base-prelude
     , containers
+    , lens
     , megaparsec
     , text
   -- }}}
