@@ -4,6 +4,7 @@ name: advent
 -- vim: foldmethod=marker
 
 common shared -- {{{
+  -- {{{
   default-language: GHC2021
   ghc-options: -O2
   mixins: base hiding (Prelude), base-prelude (BasePrelude as Prelude)
@@ -21,9 +22,18 @@ common shared -- {{{
     TransformListComp
     TypeFamilies
     ViewPatterns
+  -- }}}
   build-depends: base, base-prelude
+    , containers
+    , megaparsec
+    , text
   -- }}}
 
-executable day01
+executable day01 -- {{{
   import:  shared
   main-is: day01.hs
+  -- }}}
+executable day02 -- {{{
+  import:  shared
+  main-is: day02.hs
+  -- }}}
