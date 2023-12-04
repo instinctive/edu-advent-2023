@@ -23,7 +23,7 @@ solve tt =
     nrows = length tt
     ncols = T.length (head tt)
 
-    parts = runSTArray do
+    gears = runSTArray do
         ary <- newArray ((-1,-1),(nrows,ncols)) []
         let addGear r c dr dc = modifyArray ary (r+dr,c+dc) ((r,c):)
         for_ (zip [0..] tt) \(row,t) ->
@@ -36,7 +36,7 @@ solve tt =
     partsAndGears =
         [ (read @Int w, nubOrd $ concat bb)
         | (row,t) <- zip [0..] tt
-        , let xx = zip (T.unpack t) $ (parts!).(row,) <$> [0..ncols-1]
+        , let xx = zip (T.unpack t) $ (gears!).(row,) <$> [0..ncols-1]
         , (w,bb) <- unzip <$> wordsBy (not.isDigit.fst) xx
         , any (not.null) bb
         ]
