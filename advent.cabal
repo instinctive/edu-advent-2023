@@ -3,11 +3,26 @@ version: 1.0.0.0
 name: advent
 -- vim: foldmethod=marker
 
+library jedi-prelude -- {{{
+  hs-source-dirs: prelude
+  exposed-modules: JediPrelude
+  default-language: GHC2021
+  ghc-options: -O2
+  mixins: base hiding (Prelude), base-prelude (BasePrelude as Prelude)
+  build-depends: base, base-prelude
+    , array
+    , containers
+    , lens
+    , megaparsec
+    , split
+    , text
+    -- }}}
+
 common shared -- {{{
   -- {{{
   default-language: GHC2021
   ghc-options: -O2
-  mixins: base hiding (Prelude), base-prelude (BasePrelude as Prelude)
+  mixins: base hiding (Prelude), jedi-prelude (JediPrelude as Prelude)
   default-extensions:
     BlockArguments
     CPP
@@ -23,12 +38,9 @@ common shared -- {{{
     TypeFamilies
     ViewPatterns
   -- }}}
-  build-depends: base, base-prelude
-    , array
+  build-depends: base, jedi-prelude
     , containers
-    , lens
     , megaparsec
-    , split
     , text
   -- }}}
 

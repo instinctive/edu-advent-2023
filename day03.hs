@@ -2,11 +2,6 @@
 
 module Main where
 
-import Control.Lens
-import Data.Array.IArray ((!))
-import Data.Array.ST
-import Data.Containers.ListUtils ( nubOrd )
-import Data.List.Split ( wordsBy )
 import qualified Data.Map.Strict as M
 import qualified Data.Set        as S
 import qualified Data.Text       as T
@@ -14,8 +9,6 @@ import qualified Data.Text.IO    as T
 
 main = T.getContents <&> T.lines >>= \tt -> do
     each print $ solve tt
-
-modifyArray ary k f = readArray ary k >>= writeArray ary k . f
 
 solve tt =
     (part1,part2)

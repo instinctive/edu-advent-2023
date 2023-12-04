@@ -5,9 +5,6 @@
 module Main where
 
 import Prelude hiding ( some )
-
-import Data.Map.Strict ( Map  )
-import Data.Text       ( Text )
 import Text.Megaparsec hiding ( parse )
 import Text.Megaparsec.Char
 import Text.Megaparsec.Char.Lexer ( decimal )
