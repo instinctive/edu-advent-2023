@@ -7,10 +7,12 @@ module JediPrelude
     ) where
 
 import Prelude                   as X hiding ( index, lazy, uncons )
-import Control.Lens              as X
+import Control.Lens              as X hiding ( para )
 import Data.Array.ST             as X hiding ( index )
 import Data.Array.IArray         as X hiding ( index, indices )
 import Data.Containers.ListUtils as X
+import Data.Functor.Base         as X hiding ( head, tail )
+import Data.Functor.Foldable     as X hiding ( fold, gunfold )
 import Data.List.Split           as X
 
 import Data.Map.Strict ( Map  )
