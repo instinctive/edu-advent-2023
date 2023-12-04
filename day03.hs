@@ -27,11 +27,11 @@ solve tt =
         pure ary
 
     partsAndGears =
-        [ (read @Int w, nubOrd $ concat bb)
+        [ (read @Int p, nubOrd $ concat ggg)
         | (row,t) <- zip [0..] tt
         , let xx = zip (T.unpack t) $ (gears!).(row,) <$> [0..ncols-1]
-        , (w,bb) <- unzip <$> wordsBy (not.isDigit.fst) xx
-        , any (not.null) bb
+        , (p,ggg) <- unzip <$> wordsBy (not.isDigit.fst) xx
+        , any (not.null) ggg
         ]
 
     part1 = sum $ fst <$> partsAndGears
