@@ -12,12 +12,12 @@ main = T.getContents <&> map parse . T.lines >>= \mm -> do
     print $ part1 mm
     print $ part2 mm
 
-parse t =
-    S.size $ S.intersection wset nset
-  where
-    (ww,nn) = bimap (drop 2) tail . break (=="|") $ T.words t
-    wset = S.fromList ww
-    nset = S.fromList nn
+parse t
+    = T.words t
+    & break (=="|")
+    & bimap (S.fromList . drop 2) (S.fromList . tail)
+    & uncurry S.intersection
+    & S.size
 
 part1 = sum . map power where
     power 0 = 0
