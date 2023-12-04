@@ -25,12 +25,12 @@ solve tt =
 
     parts = runSTArray do
         ary <- newArray ((-1,-1),(nrows,ncols)) []
-        let setbit r c dr dc = modifyArray ary (r+dr,c+dc) ((r,c):)
+        let addGear r c dr dc = modifyArray ary (r+dr,c+dc) ((r,c):)
         for_ (zip [0..] tt) \(row,t) ->
             for_ [0..ncols-1] \col -> do
                 let c = T.index t col
                 when (c /= '.' && not (isDigit c)) do
-                    sequence_ $ setbit row col <$> [-1..1] <*> [-1..1]
+                    sequence_ $ addGear row col <$> [-1..1] <*> [-1..1]
         pure ary
 
     partsAndGears =
