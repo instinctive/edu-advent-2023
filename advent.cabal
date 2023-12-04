@@ -24,9 +24,11 @@ common shared -- {{{
     ViewPatterns
   -- }}}
   build-depends: base, base-prelude
+    , array
     , containers
     , lens
     , megaparsec
+    , split
     , text
   -- }}}
 
@@ -37,4 +39,8 @@ executable day01 -- {{{
 executable day02 -- {{{
   import:  shared
   main-is: day02.hs
+  -- }}}
+executable day03 -- {{{
+  import:  shared
+  main-is: day03.hs
   -- }}}
