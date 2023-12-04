@@ -8,16 +8,21 @@ import qualified Data.Set     as S
 import qualified Data.Text    as T
 import qualified Data.Text.IO as T
 
-main = T.getContents <&> map parse . T.lines >>= \tt -> do
-    print $ solve tt
+main = T.getContents <&> map parse . T.lines >>= \mm -> do
+    print $ part1 mm
+    print $ part2 mm
 
-parse = bimap (drop 2) tail . break (=="|") . T.words
-
-solve pp = sum $ points <$> pp
-
-points (ww,nn) =
-    if nmatch == 0 then 0 else 2^(nmatch-1)
+parse t =
+    S.size $ S.intersection wset nset
   where
-    nmatch = S.size $ S.intersection wset nset
+    (ww,nn) = bimap (drop 2) tail . break (=="|") $ T.words t
     wset = S.fromList ww
     nset = S.fromList nn
+
+part1 = sum . map power where
+    power 0 = 0
+    power m = 2^(m-1)
+
+part2 = sum . cata alg where
+    alg Nil = []
+    alg (Cons m nn) = 1 + sum (take m nn) : nn

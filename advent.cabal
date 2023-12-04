@@ -13,6 +13,7 @@ library jedi-prelude -- {{{
     , array
     , containers
     , lens
+    , recursion-schemes
     , split
     , text
     -- }}}
