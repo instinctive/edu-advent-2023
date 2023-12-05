@@ -2,7 +2,7 @@
 
 module JediPrelude
     ( module X
-    , Map, Set, Text
+    , IntMap, Map, Set, Text
     , modifyArray
     ) where
 
@@ -15,9 +15,10 @@ import Data.Functor.Base         as X hiding ( head, tail )
 import Data.Functor.Foldable     as X hiding ( fold, gunfold )
 import Data.List.Split           as X
 
-import Data.Map.Strict ( Map  )
-import Data.Set        ( Set  )
-import Data.Text       ( Text )
+import Data.IntMap.Strict ( IntMap )
+import Data.Map.Strict    ( Map    )
+import Data.Set           ( Set    )
+import Data.Text          ( Text   )
 
 modifyArray :: (MArray a b m, Ix i) => a i b -> i -> (b -> b) -> m ()
 modifyArray ary k f = readArray ary k >>= writeArray ary k . f
