@@ -9,12 +9,10 @@ import Text.Megaparsec hiding ( parse )
 import Text.Megaparsec.Char
 import Text.Megaparsec.Char.Lexer ( decimal )
 import qualified Data.Map.Strict as M
-import qualified Data.Text       as T
-import qualified Data.Text.IO    as T
 
 type Parser = Parsec Void Text
 
-main = map parse . T.lines <$> T.getContents >>= \pp -> do
+main = map parse . tlines <$> tgetContents >>= \pp -> do
     print $ part1 pp
     print $ part2 pp
   where
@@ -30,7 +28,7 @@ gameParser =
     sample = do
         count <- decimal
         spaceChar
-        color <- some letterChar <&> T.pack
+        color <- some letterChar <&> tpack
         pure (color, count)
 
 part1 = sum . map fst . filter (all (`leq` bag) . snd)

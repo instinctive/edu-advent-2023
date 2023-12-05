@@ -4,6 +4,8 @@ module JediPrelude
     ( module X
     , IntMap, Map, Set, Text
     , modifyArray
+    , tgetContents, tindex, tlength, tlines, tpack, tunpack, twords
+    , tdecimal
     ) where
 
 import Prelude                   as X hiding ( index, lazy, uncons )
@@ -20,6 +22,21 @@ import Data.Map.Strict    ( Map    )
 import Data.Set           ( Set    )
 import Data.Text          ( Text   )
 
+import qualified Data.Text      as T
+import qualified Data.Text.IO   as T
+import qualified Data.Text.Read as T
+
 modifyArray :: (MArray a b m, Ix i) => a i b -> i -> (b -> b) -> m ()
 modifyArray ary k f = readArray ary k >>= writeArray ary k . f
 
+tgetContents = T.getContents
+tindex       = T.index
+tlength      = T.length
+tlines       = T.lines
+tpack        = T.pack
+tunpack      = T.unpack
+twords       = T.words
+
+tdecimal :: Text -> Int
+tdecimal t = either err fst $ T.decimal t where
+    err s = error $ s <> " " <> show t
