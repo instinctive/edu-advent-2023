@@ -12,6 +12,6 @@ part1 [tt,dd] = fmap product . sequence $
 part2 [tt,dd] = solve (tdecimal $ mconcat tt) (tdecimal $ mconcat dd)
 
 solve t d = find pred [1..half] <&> answer where
-    half = div (d+1) 2
+    half = div (t+1) 2
     pred i = i * (t-i) > d
     answer i = t - 2*i + 1
