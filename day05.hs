@@ -39,15 +39,16 @@ part2 (ss,mm) =
 
     go [] _ = []
     go sss [] = sss
+    go ((_,0):ss) aaa     = go ss aaa
+    go sss ((_,(0,_)):aa) = go sss aa
     go sss@((s,sn):ss) aaa@((a,(an,delta)):aa)
-        | delta == 0 =                     go sss aa
         | s + sn <= a =           (s,sn) : go ss aaa
         | a + an <= s =                    go sss aa
         | s < a = let q = a - s in (s,q) : go ((s,sn-q):ss) aaa
+        | a < s = let q = s - a in         go sss ((a+q,(an-q,delta)):aa)
         | otherwise =
-            let q = s - a in
-            let n = min sn (an - q) in
-            (s + delta, n) : go ((s+n,sn-n):ss) ((a+n+q,(an-q-n,delta)):aa)
+            let n = min sn an in
+            (s + delta, n) : go ((s+n,sn-n):ss) ((a+n,(an-n,delta)):aa)
 
 cleanup = go . sort where
     go ((_,0):more)                    = go more
