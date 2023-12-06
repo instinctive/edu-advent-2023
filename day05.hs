@@ -16,15 +16,41 @@ parse tt =
     [sraw]:mraw = splitOn [""] tt
     seeds = tdecimal <$> tail (twords sraw)
     maps = mkMap . tail <$> mraw
-    mkMap = IM.fromListWith (+) . concatMap mkItem
+    mkMap = IM.fromList . map mkItem
     mkItem = mk . map tdecimal . twords where
-        mk [dst,src,rng] = [(src,dst-src),(src+rng,0)]
+        mk [dst,src,rng] = (src,(rng,dst-src))
 
-convert x m = x + maybe 0 snd (IM.lookupLE x m)
+part1 (ss,mm) =
+    minimum $ ss <&> \s -> foldl' convert s mm
+  where
+    convert x m = IM.lookupLE x m & maybe x (morph x)
+    morph x (src,(rng,delta))
+        | src + rng <= x = x
+        | otherwise      = x + delta
 
-part1 (ss,mm) = minimum $ ss <&> \s ->
-    foldl' convert s mm
+part2 (ss,mm) =
+    fst . head $
+    foldl' almanac seeds mm
+  where
+    seeds = cleanup $ unfoldr f ss where
+        f [] = Nothing
+        f (s:n:more) = Just ((s,n),more)
+    almanac s m = cleanup $ go s (IM.assocs m)
 
-part2 (ss,mm) = minimum $ chunksOf 2 ss <&> \[s,n] ->
-    minimum $ [s..s+n-1] <&> \s ->
-    foldl' convert s mm
+    go [] _ = []
+    go sss [] = sss
+    go sss@((s,sn):ss) aaa@((a,(an,delta)):aa)
+        | delta == 0 =                     go sss aa
+        | s + sn <= a =           (s,sn) : go ss aaa
+        | a + an <= s =                    go sss aa
+        | s < a = let q = a - s in (s,q) : go ((s,sn-q):ss) aaa
+        | otherwise =
+            let q = s - a in
+            let n = min sn (an - q) in
+            (s + delta, n) : go ((s+n,sn-n):ss) ((a+n+q,(an-q-n,delta)):aa)
+
+cleanup = go . sort where
+    go ((_,0):more)                    = go more
+    go ((a,m):(b,n):more) | a + m >= b = go ((a, max (a+m) (b+n) - a):more)
+    go (x:more)                        = x : go more
+    go []                              = []
