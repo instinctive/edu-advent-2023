@@ -16,16 +16,11 @@ parse tt =
     [sraw]:mraw = splitOn [""] tt
     seeds = tdecimal <$> tail (twords sraw)
     maps = mkMap . tail <$> mraw
-    mkMap = IM.fromList . map mkItem
+    mkMap = IM.fromListWith (+) . concatMap mkItem
     mkItem = mk . map tdecimal . twords where
-        mk [dst,src,rng] = (src,(dst,rng))
+        mk [dst,src,rng] = [(src,dst-src),(src+rng,0)]
 
-convert x m =
-    case IM.lookupLE x m of
-        Nothing -> x
-        Just (src,(dst,rng))
-            | src + rng <= x -> x
-            | otherwise -> dst + x - src
+convert x m = x + maybe 0 snd (IM.lookupLE x m)
 
 part1 (ss,mm) = minimum $ ss <&> \s ->
     foldl' convert s mm
