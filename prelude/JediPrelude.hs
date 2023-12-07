@@ -39,5 +39,8 @@ tunpack      = T.unpack
 twords       = T.words
 
 tdecimal :: Text -> Int
-tdecimal t = either err fst $ T.decimal t where
+tdecimal t = either err check $ T.decimal t where
     err s = error $ s <> " " <> show t
+    check (x,u)
+        | T.null u = x
+        | otherwise = error $ "incomplete tdecimal: " <> show (x,u)
