@@ -6,9 +6,9 @@ module Main where
 
 import qualified Data.Map.Strict as M
 
-main = tgetContents <&> parse . tlines >>= \(instr,nodes) -> do
+main = tgetContents <&> parse . tlines >>= \(inst,nodes) -> do
     let next i x = fromJust (M.lookup x nodes) & \(l,r) ->
-            case tindex instr (i `mod` tlength instr) of
+            case tindex inst (i `mod` tlength inst) of
                 'L' -> l
                 'R' -> r
     let anodes = filter ((=='A').tlast) (M.keys nodes)
