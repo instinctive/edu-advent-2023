@@ -72,3 +72,7 @@ executable day07 -- {{{
   import:  shared
   main-is: day07.hs
   -- }}}
+executable day08 -- {{{
+  import:  shared
+  main-is: day08.hs
+  -- }}}
