@@ -26,6 +26,7 @@ part1 next = go 0 where
     go i "ZZZ" = Just i
     go i x = go (i+1) (next i x)
 
+-- TODO naive and slow "solution"
 part2 next = go 0 where
     go i zz | all ((=='Z').tlast) zz = Just i
     go i zz = go (i+1) $ map (next i) zz
