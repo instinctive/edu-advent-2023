@@ -4,7 +4,7 @@ module JediPrelude
     ( module X
     , IntMap, Map, Set, Text
     , modifyArray
-    , tgetContents, tindex, tlength, tlines, tmap, tpack, tunpack, twords
+    , tgetContents, tindex, tlast, tlength, tlines, tmap, tpack, tunpack, twords
     , tdecimal
     ) where
 
@@ -31,6 +31,7 @@ modifyArray ary k f = readArray ary k >>= writeArray ary k . f
 
 tgetContents = T.getContents
 tindex       = T.index
+tlast        = T.last
 tlength      = T.length
 tlines       = T.lines
 tmap         = T.map
