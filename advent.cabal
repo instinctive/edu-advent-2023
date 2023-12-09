@@ -12,6 +12,7 @@ library jedi-prelude -- {{{
   build-depends: base, base-prelude
     , array
     , containers
+    , extra
     , lens
     , recursion-schemes
     , split
@@ -75,4 +76,8 @@ executable day07 -- {{{
 executable day08 -- {{{
   import:  shared
   main-is: day08.hs
+  -- }}}
+executable day09 -- {{{
+  import:  shared
+  main-is: day09.hs
   -- }}}
