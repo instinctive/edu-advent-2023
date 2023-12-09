@@ -2,7 +2,7 @@
 
 module JediPrelude
     ( module X
-    , Array, UArray
+    , UArray
     , IntMap, Map, Set, Text
     , modifyArray
     , tgetContents, tindex, tlast, tlength, tlines, tmap, tpack, tunpack, twords
@@ -19,8 +19,6 @@ import Data.Functor.Base         as X hiding ( head, tail )
 import Data.Functor.Foldable     as X hiding ( fold, gunfold )
 import Data.List.Split           as X
 
--- import Data.Array.IArray  ( Array    )
--- import Data.Array.ST      ( STUArray )
 import Data.Array.Unboxed ( UArray   )
 import Data.IntMap.Strict ( IntMap   )
 import Data.Map.Strict    ( Map      )
