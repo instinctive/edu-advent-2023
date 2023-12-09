@@ -2,14 +2,16 @@
 
 module JediPrelude
     ( module X
+    , Array, UArray
     , IntMap, Map, Set, Text
     , modifyArray
     , tgetContents, tindex, tlast, tlength, tlines, tmap, tpack, tunpack, twords
-    , tdecimal
+    , tsigned, tdecimal
     ) where
 
-import Prelude                   as X hiding ( index, lazy, uncons )
+import Prelude                   as X hiding ( index, lazy, loop, uncons )
 import Control.Lens              as X hiding ( para )
+import Control.Monad.Extra       as X
 import Data.Array.ST             as X hiding ( index )
 import Data.Array.IArray         as X hiding ( index, indices )
 import Data.Containers.ListUtils as X
@@ -17,10 +19,13 @@ import Data.Functor.Base         as X hiding ( head, tail )
 import Data.Functor.Foldable     as X hiding ( fold, gunfold )
 import Data.List.Split           as X
 
-import Data.IntMap.Strict ( IntMap )
-import Data.Map.Strict    ( Map    )
-import Data.Set           ( Set    )
-import Data.Text          ( Text   )
+-- import Data.Array.IArray  ( Array    )
+-- import Data.Array.ST      ( STUArray )
+import Data.Array.Unboxed ( UArray   )
+import Data.IntMap.Strict ( IntMap   )
+import Data.Map.Strict    ( Map      )
+import Data.Set           ( Set      )
+import Data.Text          ( Text     )
 
 import qualified Data.Text      as T
 import qualified Data.Text.IO   as T
@@ -38,6 +43,13 @@ tmap         = T.map
 tpack        = T.pack
 tunpack      = T.unpack
 twords       = T.words
+
+tsigned :: Text -> Int
+tsigned t = either err check $ T.signed T.decimal t where
+    err s = error $ s <> " " <> show t
+    check (x,u)
+        | T.null u = x
+        | otherwise = error $ "incomplete tsigned: " <> show (x,u)
 
 tdecimal :: Text -> Int
 tdecimal t = either err check $ T.decimal t where
