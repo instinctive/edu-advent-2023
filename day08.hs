@@ -7,26 +7,24 @@ module Main where
 import qualified Data.Map.Strict as M
 
 main = tgetContents <&> parse . tlines >>= \(inst,nodes) -> do
-    let next i x = fromJust (M.lookup x nodes) & \(l,r) ->
+    let step x i = nodes M.! x & \(l,r) ->
             case tindex inst (i `mod` tlength inst) of
                 'L' -> l
                 'R' -> r
     let anodes = filter ((=='A').tlast) (M.keys nodes)
-    print $ part1 next "AAA"
-    print $ part2 next anodes
+    print $ part1 $ path step "AAA"
+    print $ part2 $ path step <$> anodes
 
-parse (inst:_:nodes) =
-    (inst, M.fromList $ mk <$> nodes)
+parse (inst:_:specs) =
+    (inst, M.fromList $ mk <$> specs)
   where
-    mk = mkItem . twords . tmap tr
-    mkItem [a,b,c] = (a,(b,c))
-    tr c = if isAlphaNum c then c else ' '
+    mk t = tmap tr t & twords & \[a,b,c] -> (a,(b,c))
+      where tr c = if isAlphaNum c then c else ' '
 
-part1 next = go 0 where
-    go i "ZZZ" = Just i
-    go i x = go (i+1) (next i x)
+path step x = zip [0..] $ scanl step x [0..]
 
--- TODO naive and slow "solution"
-part2 next = go 0 where
-    go i zz | all ((=='Z').tlast) zz = Just i
-    go i zz = go (i+1) $ map (next i) zz
+part1 = find ((=="ZZZ").snd)
+
+part2 = foldl' lcm 1 . map delta where
+    zeds (i,t) = bool Nothing (Just i) $ tlast t == 'Z'
+    delta xx = mapMaybe zeds xx & \(a:b:_) -> b - a
