@@ -4,6 +4,7 @@ module JediPrelude
     ( module X
     , UArray
     , IntMap, Map, Set, Text
+    , V2(..), _x, _y
     , modifyArray
     , tgetContents, tindex, tlast, tlength, tlines, tmap, tpack, tunpack, twords
     , tsigned, tdecimal
@@ -24,6 +25,7 @@ import Data.IntMap.Strict ( IntMap   )
 import Data.Map.Strict    ( Map      )
 import Data.Set           ( Set      )
 import Data.Text          ( Text     )
+import Linear.V2          ( V2(..), _x, _y )
 
 import qualified Data.Text      as T
 import qualified Data.Text.IO   as T

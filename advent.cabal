@@ -14,6 +14,7 @@ library jedi-prelude -- {{{
     , containers
     , extra
     , lens
+    , linear
     , recursion-schemes
     , split
     , text
