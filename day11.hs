@@ -2,7 +2,7 @@
 
 module Main where
 
-import qualified Data.Set as S
+import qualified Data.IntSet as IS
 
 main = tgetContents <&> parse >>=
     each print . solve [2,1000000]
@@ -26,5 +26,6 @@ solve mm gg =
         gaps xx a b | a > b = gaps xx b a
         gaps xx a b = b - a - used xx where
             used = length . takeWhile (<b) . dropWhile (<a)
-    rows = view _x <$> gg & S.toList . S.fromList
-    cols = view _y <$> gg & S.toList . S.fromList
+    rows = view _x <$> gg & uniq
+    cols = view _y <$> gg & uniq
+    uniq = IS.toList . IS.fromList
