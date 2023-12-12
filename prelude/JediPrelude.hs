@@ -6,7 +6,8 @@ module JediPrelude
     , IntMap, Map, Set, Text
     , V2(..), _x, _y
     , modifyArray
-    , tgetContents, tindex, tlast, tlength, tlines, tmap, tpack, tsplitOn, tunpack, twords
+    , tdrop, telem, tgetContents, tindex, tlast, tlength, tlines
+    , tmap, tnull, tpack, tsplitOn, tunpack, twords
     , tsigned, tdecimal
     ) where
 
@@ -34,12 +35,15 @@ import qualified Data.Text.Read as T
 modifyArray :: (MArray a b m, Ix i) => a i b -> i -> (b -> b) -> m ()
 modifyArray ary k f = readArray ary k >>= writeArray ary k . f
 
+tdrop        = T.drop
+telem        = T.elem
 tgetContents = T.getContents
 tindex       = T.index
 tlast        = T.last
 tlength      = T.length
 tlines       = T.lines
 tmap         = T.map
+tnull        = T.null
 tpack        = T.pack
 tsplitOn     = T.splitOn
 tunpack      = T.unpack
