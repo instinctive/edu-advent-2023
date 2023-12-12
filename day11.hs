@@ -16,13 +16,13 @@ parse raw =
 solve mm gg =
     ans <$> mm
   where
-    ans m = mhd + exp * (m-1)
-    [ mhd, exp ] = map sum $ transpose
+    ans m = mhd + gap * (m-1)
+    [ mhd, gap ] = map sum $ transpose
         [ dist a b | a:bb <- tails gg, b <- bb ]
-    dist ab@(V2 a b) uv@(V2 u v) = [mhd,exp]
+    dist ab@(V2 a b) uv@(V2 u v) = [mhd,gap]
       where
         mhd = sum . abs $ ab - uv
-        exp = gaps rows a u + gaps cols b v
+        gap = gaps rows a u + gaps cols b v
         gaps xx a b | a > b = gaps xx b a
         gaps xx a b = b - a - used xx where
             used = length . takeWhile (<b) . dropWhile (<a)
