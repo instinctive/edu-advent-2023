@@ -6,7 +6,7 @@ module JediPrelude
     , IntMap, Map, Set, Text
     , V2(..), _x, _y
     , modifyArray
-    , tgetContents, tindex, tlast, tlength, tlines, tmap, tpack, tunpack, twords
+    , tgetContents, tindex, tlast, tlength, tlines, tmap, tpack, tsplitOn, tunpack, twords
     , tsigned, tdecimal
     ) where
 
@@ -41,6 +41,7 @@ tlength      = T.length
 tlines       = T.lines
 tmap         = T.map
 tpack        = T.pack
+tsplitOn     = T.splitOn
 tunpack      = T.unpack
 twords       = T.words
 
