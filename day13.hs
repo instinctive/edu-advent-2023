@@ -11,14 +11,20 @@ main = tgetContents <&> splitOn [""] . tlines >>= \pp -> do
     print . sum $ solve <$> pp
 
 solve tt =
-    100 * count (horz tt) + count (vert tt)
+    100 * count (horz get) + count (vert get)
   where
-    mk x '.' = 2*x
-    mk x '#' = 2*x + 1
-    horz  = map (T.foldl' mk 0)
-    vert tt =
-        [ foldl' mk 0 $ (`tindex` i) <$> tt
-        | i <- [0..tlength (head tt) - 1] ]
+    nrows = length tt
+    ncols = tlength (head tt)
+    rows = [0..nrows-1]
+    cols = [0..ncols-1]
+    ary = listArray (0,nrows-1) tt :: Array Int Text
+    get r c = tindex (ary ! r) c & \case '.' -> 0; '#' -> 1
+    vert get = mk (flip get) cols rows
+    horz get = mk get rows cols
+    mk get rows cols =
+        [ foldl' f 0 $ get r <$> cols
+        | r <- rows ]
+      where f x q = 2*x + q
 
 count xx =
     find match (zip aa bb)
