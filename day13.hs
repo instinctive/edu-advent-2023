@@ -1,34 +1,40 @@
 -- https://adventofcode.com/2023/day/13
--- TODO Part 2
 
 {-# LANGUAGE OverloadedStrings #-}
 
 module Main where
 
-import qualified Data.Text as T
-
 main = tgetContents <&> splitOn [""] . tlines >>= \pp -> do
-    print . sum $ solve <$> pp
+    each print . map sum . transpose $ solve <$> pp
 
 solve tt =
-    100 * count (horz get) + count (vert get)
+    [sum part1, sum part2]
   where
+    ans get =
+        ( (100 *) <$> count (horz get) )
+        <> count (vert get)
     nrows = length tt
     ncols = tlength (head tt)
     rows = [0..nrows-1]
     cols = [0..ncols-1]
     ary = listArray (0,nrows-1) tt :: Array Int Text
-    get r c = tindex (ary ! r) c & \case '.' -> 0; '#' -> 1
+    getraw r c = tindex (ary ! r) c & \case '.' -> 0; '#' -> 1
     vert get = mk (flip get) cols rows
     horz get = mk get rows cols
     mk get rows cols =
         [ foldl' f 0 $ get r <$> cols
         | r <- rows ]
       where f x q = 2*x + q
+    smudge r' c' = \r c ->
+        if (r,c) == (r',c')
+        then 1 - getraw r c
+        else getraw r c
+    part1 = ans getraw
+    part2 = fromJust $ find (not.null)
+        [ ans (smudge r c) \\ part1 | r <- rows , c <- cols ]
 
 count xx =
-    find match (zip aa bb)
-    & maybe 0 (length.snd)
+    filter match (zip aa bb) <&> length.snd & filter (/=0)
   where
     aa = tail $ tails xx
     bb = tail $ reverse . tail . tails $ reverse xx
