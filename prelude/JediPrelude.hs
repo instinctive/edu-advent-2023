@@ -16,6 +16,7 @@ import Control.Lens              as X hiding ( para )
 import Control.Monad.Extra       as X
 import Data.Array.ST             as X hiding ( index )
 import Data.Array.IArray         as X hiding ( index, indices )
+import Data.Array.Unsafe         as X
 import Data.Containers.ListUtils as X
 import Data.Functor.Base         as X hiding ( head, tail )
 import Data.Functor.Foldable     as X hiding ( fold, gunfold )
