@@ -46,6 +46,12 @@ common shared -- {{{
     , text
   -- }}}
 
+library grid -- {{{
+  import: shared
+  hs-source-dirs: grid
+  exposed-modules: Grid
+  -- }}}
+
 executable day01 -- {{{
   import:  shared
   main-is: day01.hs
@@ -105,4 +111,9 @@ executable day14 -- {{{
 executable day15 -- {{{
   import:  shared
   main-is: day15.hs
+  -- }}}
+executable day16 -- {{{
+  import:  shared
+  main-is: day16.hs
+  build-depends: grid
   -- }}}
