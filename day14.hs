@@ -3,32 +3,19 @@
 
 module Main where
 
-main = tgetContents <&> parse . tlines >>=
+import Grid
+
+main = tgetContents <&> mkGrid . tlines >>=
     print . solve
 
-data Ary = Ary
-    { _nrows :: Int
-    , _ncols :: Int
-    , _getraw :: Int -> Int -> Char
-    }
-
-parse tt =
-    Ary nrows ncols getraw
+solve grid@Grid{..} =
+    sum $ column <$> [0.._gridCols-1]
   where
-    nrows = length tt
-    ncols = tlength (head tt)
-    rows = [0..nrows-1]
-    cols = [0..ncols-1]
-    ary = listArray (0,nrows-1) tt :: Array Int Text
-    getraw r c = tindex (ary ! r) c
-
-solve Ary{..} =
-    sum $ column <$> [0.._ncols-1]
-  where
+    r = _gridRows
     column c =
-        go 0 _nrows xx
+        go 0 r xx
       where
-        xx = zip [_nrows,_nrows-1..] $ flip _getraw c <$> [0.._nrows-1]
+        xx = zip [r,r-1..] $ mapMaybe (atGrid grid) $ (,c) <$> [0..r-1]
         go n w [] = n
         go n w ((i,x):ixs) = case x of
             '.' -> go  n     w    ixs

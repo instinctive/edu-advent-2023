@@ -107,6 +107,7 @@ executable day13 -- {{{
 executable day14 -- {{{
   import:  shared
   main-is: day14.hs
+  build-depends: grid
   -- }}}
 executable day15 -- {{{
   import:  shared
