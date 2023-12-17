@@ -50,6 +50,9 @@ data Grid = Grid
     , _gridArray :: Array Int Text
     } deriving Show
 
+gridBounds     Grid{..} = ((0,0),(_gridRows-1,_gridCols-1))
+gridBoundsPlus Grid{..} = ((-1,-1),(_gridRows,_gridCols))
+
 mkGrid t =
     Grid nrows ncols ary
   where
