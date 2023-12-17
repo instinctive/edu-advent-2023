@@ -6,7 +6,7 @@ import qualified Data.Map.Strict as M
 
 import Grid
 
-main = tgetContents <&> mkGrid >>= \g -> do
+main = tgetContents <&> mkGrid . tlines >>= \g -> do
     print $ solve g (0,0) E
     print $ part2 g
 

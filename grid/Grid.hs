@@ -53,10 +53,9 @@ data Grid = Grid
 gridBounds     Grid{..} = ((0,0),(_gridRows-1,_gridCols-1))
 gridBoundsPlus Grid{..} = ((-1,-1),(_gridRows,_gridCols))
 
-mkGrid t =
+mkGrid tt =
     Grid nrows ncols ary
   where
-    tt = tlines t
     nrows = length tt
     ncols = tlength (head tt)
     ary = listArray (0,nrows-1) tt
