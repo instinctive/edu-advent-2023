@@ -52,6 +52,12 @@ library grid -- {{{
   exposed-modules: Grid
   -- }}}
 
+library heap -- {{{
+  import: shared
+  hs-source-dirs: heap
+  exposed-modules: Heap
+  -- }}}
+
 executable day01 -- {{{
   import:  shared
   main-is: day01.hs
@@ -121,5 +127,5 @@ executable day16 -- {{{
 executable day17 -- {{{
   import:  shared
   main-is: day17.hs
-  build-depends: grid
+  build-depends: grid, heap, mtl
   -- }}}
