@@ -2,7 +2,7 @@ module Grid where
 
 type Pos = (Int,Int)
 
-data NWSE = N | W | S | E deriving (Eq,Ord,Show)
+data NWSE = N | W | S | E deriving (Eq,Ord,Ix,Show)
 
 opp N = S
 opp S = N
