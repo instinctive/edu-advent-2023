@@ -134,3 +134,8 @@ executable day18 -- {{{
   main-is: day18.hs
   build-depends: grid
   -- }}}
+executable day19 -- {{{
+  import:  shared
+  main-is: day19.hs
+  build-depends: grid
+  -- }}}
